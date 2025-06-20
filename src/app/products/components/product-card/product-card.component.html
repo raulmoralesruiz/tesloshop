@@ -6,15 +6,19 @@
     />
   </figure>
   <div class="card-body">
-    <h2 class="card-title">Card Title</h2>
-    <p>
-      A card component has a figure, a body part, and inside body there are
-      title and actions parts
-    </p>
+    <h2 class="card-title">{{ product().title }}</h2>
+    <p>{{ product().description | slice : 0 : 70 }}...</p>
     <div class="card-actions justify-end">
-      <a class="link link-accent" [routerLink]="['/product', 't-shirt']"
+      <a class="link link-accent" [routerLink]="['/product', product().slug]"
         >Comprar</a
       >
     </div>
   </div>
 </div>
+
+<!-- titulo -->
+<!-- desc -->
+<!-- imagen -->
+
+<!-- input -->
+<!-- signal -->
