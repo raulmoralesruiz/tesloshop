@@ -4,10 +4,11 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { ProductsService } from '../../../products/services/products.service';
 import { JsonPipe } from '@angular/common';
+import { ProductCarouselComponent } from '../../../products/components/product-carousel/product-carousel.component';
 
 @Component({
   selector: 'app-product-page',
-  imports: [],
+  imports: [ProductCarouselComponent],
   templateUrl: './product-page.component.html',
 })
 export class ProductPageComponent {
@@ -22,8 +23,6 @@ export class ProductPageComponent {
   productResource = rxResource({
     request: () => ({ idSlug: this.productIdSlug() }),
     loader: ({ request }) => {
-      // if( !request.idSlug ) return of([]); // of devuelve un obersvable, con un array vacío
-
       return this.productsService.getProductByIdSlug(this.productIdSlug());
     },
   });
