@@ -1,5 +1,9 @@
-<form class="flex flex-col gap-2">
-  <label class="input validator">
+<form
+  class="flex flex-col gap-2"
+  [formGroup]="loginForm"
+  (ngSubmit)="onSubmit()"
+>
+  <label class="input input-bordered flex items-center gap-2">
     <svg
       class="h-[1em] opacity-50"
       xmlns="http://www.w3.org/2000/svg"
@@ -16,11 +20,16 @@
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
       </g>
     </svg>
-    <input type="email" placeholder="mail@site.com" required />
+    <input
+      class="grow"
+      type="email"
+      placeholder="mail@site.com"
+      required
+      formControlName="email"
+    />
   </label>
-  <!-- <div class="validator-hint hidden">Enter valid email address</div> -->
 
-  <label class="input validator">
+  <label class="input input-bordered flex items-center gap-2">
     <svg
       class="h-[1em] opacity-50"
       xmlns="http://www.w3.org/2000/svg"
@@ -40,23 +49,41 @@
       </g>
     </svg>
     <input
+      class="grow"
       type="password"
-      required
       placeholder="Password"
-      minlength="8"
-      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-      title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+      required
+      minlength="6"
+      formControlName="password"
     />
   </label>
-  <!-- <p class="validator-hint hidden">
-    Must be more than 8 characters, including
-    <br />At least one number <br />At least one lowercase letter <br />At least
-    one uppercase letter
-  </p> -->
 
   <button type="submit" class="btn btn-secondary">Login</button>
+
   <p class="text-slate-700">
     ¿No estás registrado?
     <a routerLink="/auth/register" class="text-secondary">Regístrate aquí</a>
   </p>
 </form>
+
+@if (hasError()) {
+<div
+  role="alert"
+  class="alert alert-warning animate-fadeIn fixed right-5 bottom-5"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 shrink-0 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+    />
+  </svg>
+  <span>Por favor revise la información</span>
+</div>
+}
