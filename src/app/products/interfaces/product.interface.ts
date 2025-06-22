@@ -1,4 +1,4 @@
-import { User } from '@auth/auth/user.interface';
+import { User } from '@auth/interfaces/user.interface';
 
 export interface ProductsResponse {
   count: number;
