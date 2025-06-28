@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { IsAdminGuard } from '@auth/guards/is-admin.guard';
 import { NotAuthenticatedGuard } from '@auth/guards/not-authenticated.guard';
 
 export const routes: Routes = [
