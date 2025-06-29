@@ -1,1 +1,16 @@
-<p>products-admin-page works!</p>
+<h1 class="text-2xl font-bold">Listado de productos</h1>
+<h3 class="text-lg">
+  Total de productos
+  <span class="text-accent">{{
+    productsResource.value()?.products?.length
+  }}</span>
+</h3>
+
+<div class="divider"></div>
+
+<app-pagination
+  [pages]="productsResource.value()?.pages ?? 0"
+  [currentPage]="paginationService.currentPage()"
+/>
+
+<product-table [products]="productsResource.value()?.products ?? []" />
