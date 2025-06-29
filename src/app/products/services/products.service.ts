@@ -18,6 +18,7 @@ interface Options {
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   private http = inject(HttpClient);
+
   private productsCache = new Map<string, ProductsResponse>();
   private productCache = new Map<string, Product>();
 
@@ -73,6 +74,21 @@ export class ProductsService {
     id: string,
     productLike: Partial<Product>
   ): Observable<Product> {
-    return this.http.patch<Product>(`${baseUrl}/products/${id}`, productLike);
+    return this.http
+      .patch<Product>(`${baseUrl}/products/${id}`, productLike)
+      .pipe(tap((product) => this.updateProductCache(product)));
+  }
+
+  updateProductCache(product: Product) {
+    const producId = product.id;
+    this.productCache.set(producId, product);
+
+    this.productsCache.forEach((productsResponse) => {
+      productsResponse.products = productsResponse.products.map(
+        (currentProduct) => {
+          return currentProduct.id === producId ? product : currentProduct;
+        }
+      );
+    });
   }
 }
