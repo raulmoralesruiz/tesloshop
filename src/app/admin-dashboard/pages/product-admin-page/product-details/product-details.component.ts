@@ -1,5 +1,6 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ProductCarouselComponent } from '@products/components/product-carousel/product-carousel.component';
 import { Product } from '@products/interfaces/product.interface';
 import { ProductsService } from '@products/services/products.service';
@@ -17,7 +18,9 @@ import { FormUtils } from '@utils/form-utils';
 })
 export class ProductDetailsComponent implements OnInit {
   product = input.required<Product>();
+
   productsService = inject(ProductsService);
+  router = inject(Router);
 
   sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
@@ -79,10 +82,17 @@ export class ProductDetailsComponent implements OnInit {
           .map((tag) => tag.trim()) ?? [],
     };
 
-    this.productsService
-      .updateProduct(this.product().id, productLike)
-      .subscribe((product) => {
-        // console.log('producto actualizado');
+    if (this.product().id === 'new') {
+      this.productsService.createProduct(productLike).subscribe((product) => {
+        console.log('producto creado');
+        this.router.navigate(['/admin/products', product.id]);
       });
+    } else {
+      this.productsService
+        .updateProduct(this.product().id, productLike)
+        .subscribe((product) => {
+          // console.log('producto actualizado');
+        });
+    }
   }
 }
